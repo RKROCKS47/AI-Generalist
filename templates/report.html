@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Main DDR Report</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="report">
+    <div class="header">
+      <h1>Main DDR Report</h1>
+      <p>Structured AI-assisted detailed diagnostic report</p>
+    </div>
+
+    <h2>Property Details</h2>
+    <table>
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>Customer Name</td><td>{{ report.property_details.customer_name }}</td></tr>
+      <tr><td>Address</td><td>{{ report.property_details.address }}</td></tr>
+      <tr><td>Property Type</td><td>{{ report.property_details.property_type }}</td></tr>
+      <tr><td>Floors</td><td>{{ report.property_details.floors }}</td></tr>
+      <tr><td>Inspection Date</td><td>{{ report.property_details.inspection_date }}</td></tr>
+      <tr><td>Inspected By</td><td>{{ report.property_details.inspected_by }}</td></tr>
+    </table>
+
+    <h2>Property Issue Summary</h2>
+    <p>{{ report.property_issue_summary }}</p>
+
+    <h2>Area-wise Observations</h2>
+    {% for area in report.area_wise_observations %}
+      <div class="section-card">
+        <h3>{{ area.area }}</h3>
+
+        <h4>Inspection Observations</h4>
+        <ul>
+          {% for item in area.inspection_observations %}
+            <li>{{ item }}</li>
+          {% else %}
+            <li>Not Available</li>
+          {% endfor %}
+        </ul>
+
+        <h4>Thermal Evidence</h4>
+        <ul>
+          {% for item in area.thermal_evidence %}
+            <li>{{ item }}</li>
+          {% else %}
+            <li>Not Available</li>
+          {% endfor %}
+        </ul>
+
+        <h4>Supporting Images</h4>
+        <div class="img-grid">
+          {% for img in area.supporting_images %}
+            {% if img == "Image Not Available" %}
+              <div class="img-na">Image Not Available</div>
+            {% else %}
+              <img src="../{{ img }}" alt="Supporting image">
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <p><strong>Confidence:</strong> {{ area.confidence }}</p>
+      </div>
+    {% endfor %}
+
+    <h2>Thermal Analysis Findings</h2>
+    <table>
+      <tr>
+        <th>Image ID</th>
+        <th>Hotspot (°C)</th>
+        <th>Coldspot (°C)</th>
+        <th>Delta (°C)</th>
+        <th>Emissivity</th>
+        <th>Mapped Area</th>
+        <th>Interpretation</th>
+      </tr>
+      {% for item in report.thermal_analysis_findings %}
+        <tr>
+          <td>{{ item.image_id }}</td>
+          <td>{{ item.hotspot_c }}</td>
+          <td>{{ item.coldspot_c }}</td>
+          <td>{{ item.delta_c }}</td>
+          <td>{{ item.emissivity }}</td>
+          <td>{{ item.mapped_area }}</td>
+          <td>{{ item.interpretation }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="7">Not Available</td></tr>
+      {% endfor %}
+    </table>
+
+    <h2>Probable Root Cause</h2>
+    <ul>
+      {% for item in report.probable_root_cause %}
+        <li>
+          <strong>{{ item.cause }}</strong> — Confidence: {{ item.confidence }}
+          <ul>
+            {% for ev in item.evidence %}
+              <li>{{ ev }}</li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% else %}
+        <li>Not Available</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Severity Assessment</h2>
+    <p><strong>Level:</strong> {{ report.severity_assessment.level }}</p>
+    <ul>
+      {% for reason in report.severity_assessment.reasoning %}
+        <li>{{ reason }}</li>
+      {% else %}
+        <li>Not Available</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Recommended Actions</h2>
+    <ul>
+      {% for item in report.recommended_actions %}
+        <li>{{ item }}</li>
+      {% else %}
+        <li>Not Available</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Additional Notes</h2>
+    <ul>
+      {% for item in report.additional_notes %}
+        <li>{{ item }}</li>
+      {% else %}
+        <li>Not Available</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Missing Information</h2>
+    <ul>
+      {% for item in report.missing_information %}
+        <li>{{ item }}</li>
+      {% else %}
+        <li>Not Available</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Conflicts</h2>
+    <ul>
+      {% for item in report.conflicts %}
+        <li>{{ item }}</li>
+      {% else %}
+        <li>Not Available</li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>

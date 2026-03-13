@@ -1,17 +1,34 @@
-{% extends "base.html" %}
-{% block title %}Upload PDFs{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Main DDR Generator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Main DDR Generator</h1>
+    <p>Upload the Inspection Report PDF and Thermal Report PDF to generate a client-ready DDR.</p>
 
-{% block content %}
-<h2>Generate Detailed Diagnostic Report</h2>
-<form action="{{ url_for('main.generate_ddr') }}" method="post" enctype="multipart/form-data">
-  <div>
-    <label for="inspection_pdf">Inspection Report PDF</label>
-    <input type="file" id="inspection_pdf" name="inspection_pdf" accept="application/pdf" required>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form class="card" method="post" action="/generate" enctype="multipart/form-data">
+      <label for="inspection_pdf">Inspection Report PDF</label>
+      <input type="file" id="inspection_pdf" name="inspection_pdf" accept=".pdf" required>
+
+      <label for="thermal_pdf">Thermal Report PDF</label>
+      <input type="file" id="thermal_pdf" name="thermal_pdf" accept=".pdf" required>
+
+      <button type="submit">Generate DDR</button>
+    </form>
   </div>
-  <div>
-    <label for="thermal_pdf">Thermal Report PDF</label>
-    <input type="file" id="thermal_pdf" name="thermal_pdf" accept="application/pdf" required>
-  </div>
-  <button type="submit">Generate DDR</button>
-</form>
-{% endblock %}
+</body>
+</html>
