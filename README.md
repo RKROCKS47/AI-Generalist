@@ -103,7 +103,9 @@ AI-Generalist/
 └── README.md
 
 
-Author
-Rohit Ingale
+## 👤 Author
 
-GitHub: RKROCKS47
+Rohit Ingale  
+Full-Stack Developer (React | Node.js | MySQL)
+
+GitHub: https://github.com/RKROCKS47
