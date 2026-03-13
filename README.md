@@ -101,3 +101,9 @@ AI-Generalist/
 │   └── reports/
 │
 └── README.md
+
+
+Author
+Rohit Ingale
+
+GitHub: RKROCKS47
