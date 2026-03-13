@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Upload PDFs{% endblock %}
+
+{% block content %}
+<h2>Generate Detailed Diagnostic Report</h2>
+<form action="{{ url_for('main.generate_ddr') }}" method="post" enctype="multipart/form-data">
+  <div>
+    <label for="inspection_pdf">Inspection Report PDF</label>
+    <input type="file" id="inspection_pdf" name="inspection_pdf" accept="application/pdf" required>
+  </div>
+  <div>
+    <label for="thermal_pdf">Thermal Report PDF</label>
+    <input type="file" id="thermal_pdf" name="thermal_pdf" accept="application/pdf" required>
+  </div>
+  <button type="submit">Generate DDR</button>
+</form>
+{% endblock %}
